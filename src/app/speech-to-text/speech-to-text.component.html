@@ -1,6 +1,14 @@
-<div style="margin: 100px;">
+<div class="speech-form">
     <h1>Voice recognition</h1>
-    <button style="margin: 10px;" (click)="startService()">Start</button>
-    <button style="margin: 10px;" (click)="stopService()">Stop</button>
-    <p>{{service.text}}</p>
+
+    <label for="">Select desired language:</label>
+    <select [(ngModel)]="language">
+      <option *ngFor="let language of languages" [value]="language.value">{{language.label}}</option>
+    </select>
+
+
+    <button class="control" (click)="toggle()">{{ !isRecording ? 'Record' : 'Pause'}}</button>
+    <p class="result" *ngIf="result.text">{{result.text}}</p>
+
+    <p class="result" *ngIf="result.text">{{result.progress}}</p>
 </div>

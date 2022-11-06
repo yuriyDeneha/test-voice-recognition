@@ -11,21 +11,51 @@ export class SpeechToTextComponent implements OnInit {
 
   text: string;
 
+  isRecording: boolean;
+
+  languages = [
+    { label: 'Соловїна', value: 'uk' },
+    { label: 'Анлійська', value: 'en-US' },
+    { label: 'Мордорська', value: 'ru' },
+  ];
+
+  language = this.languages[0].value;
+
+  result;
+
   constructor(
     public service : VoiceRecognitionService
-  ) { 
+  ) {
     this.service.init()
+    this.result = this.service.state
    }
 
   ngOnInit(): void {
   }
 
+  changeConfig(lang) {
+    if (this.isRecording) {
+      return
+    }
+    this.service.init()
+  }
+
   startService(){
+    this.isRecording = true;
     this.service.start()
   }
 
   stopService(){
+    this.isRecording = false;
     this.service.stop()
+  }
+
+  toggle() {
+    if (this.isRecording) {
+      this.stopService();
+    } else {
+      this.startService()
+    }
   }
 
 }
