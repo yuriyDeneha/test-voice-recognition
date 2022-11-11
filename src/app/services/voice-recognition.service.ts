@@ -11,14 +11,16 @@ export class VoiceRecognitionService {
   recognition =  new webkitSpeechRecognition();
   isStoppedSpeechRecog = false;
 
-
   public state = {
     text: '',
     progress: '',
   }
+  recorder;
+  audio;
 
 
-  constructor() { }
+  constructor() {
+  }
 
   init(language = 'uk') {
 
@@ -48,11 +50,11 @@ export class VoiceRecognitionService {
       }
     });
   }
+
   stop() {
     this.isStoppedSpeechRecog = true;
     this.wordConcat()
-    this.recognition.stop();
-    console.log("End speech recognition")
+    return this.recognition.stop();
   }
 
   wordConcat() {

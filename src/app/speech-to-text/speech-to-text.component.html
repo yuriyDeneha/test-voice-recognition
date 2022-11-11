@@ -10,5 +10,8 @@
     <button class="control" (click)="toggle()">{{ !isRecording ? 'Record' : 'Pause'}}</button>
     <p class="result" *ngIf="result.text">{{result.text}}</p>
 
-    <p class="result" *ngIf="result.text">{{result.progress}}</p>
+    <p class="result" *ngIf="result.progress">{{result.progress}}</p>
+
+    <button class="play" *ngIf="audio" (click)="audio.play()">{{ 'Play:   Recording #1.mp3'}}</button>
+
 </div>

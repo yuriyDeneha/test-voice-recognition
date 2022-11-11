@@ -1,5 +1,6 @@
+import { AudioRecordService } from './../services/audio-record.service';
 import { Component, OnInit } from '@angular/core';
-import { VoiceRecognitionService } from '../service/voice-recognition.service'
+import { VoiceRecognitionService } from '../services/voice-recognition.service'
 
 @Component({
   selector: 'app-speech-to-text',
@@ -22,12 +23,16 @@ export class SpeechToTextComponent implements OnInit {
   language = this.languages[0].value;
 
   result;
+  audio;
 
   constructor(
-    public service : VoiceRecognitionService
+    public voiceRecognitionService: VoiceRecognitionService,
+    public audioRecordService: AudioRecordService
   ) {
-    this.service.init()
-    this.result = this.service.state
+    this.voiceRecognitionService.init();
+    this.audioRecordService.init();
+
+    this.result = this.voiceRecognitionService.state;
    }
 
   ngOnInit(): void {
@@ -37,24 +42,32 @@ export class SpeechToTextComponent implements OnInit {
     if (this.isRecording) {
       return
     }
-    this.service.init()
+    this.voiceRecognitionService.init()
   }
 
-  startService(){
+  startRecording(){
     this.isRecording = true;
-    this.service.start()
+    this.voiceRecognitionService.start();
+    this.audioRecordService.start();
   }
 
-  stopService(){
+  stopRecording(){
     this.isRecording = false;
-    this.service.stop()
+
+    this.voiceRecognitionService.stop();
+
+    this.audioRecordService.stop()
+      .then((audio) => {
+        this.audio = audio;
+      })
+
   }
 
   toggle() {
     if (this.isRecording) {
-      this.stopService();
+      this.stopRecording();
     } else {
-      this.startService()
+      this.startRecording()
     }
   }
 
