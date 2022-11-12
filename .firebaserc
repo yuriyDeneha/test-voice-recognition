@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "capusta-app"
+  },
+  "targets": {
+    "capusta-app": {
+      "hosting": {
+        "voice-reco": [
+          "capusta-app"
+        ]
+      }
+    }
   }
 }

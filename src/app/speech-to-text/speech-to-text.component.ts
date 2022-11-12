@@ -1,3 +1,4 @@
+import { FirebaseAudioFilesService } from './../services/firebase-audio-files.service';
 import { AudioRecordService } from './../services/audio-record.service';
 import { Component, OnInit } from '@angular/core';
 import { VoiceRecognitionService } from '../services/voice-recognition.service'
@@ -22,11 +23,24 @@ export class SpeechToTextComponent implements OnInit {
 
   language = this.languages[0].value;
 
+  candidate = {
+    fullName: "Yurii Deneha",
+    age: 26
+  }
+  interview = {
+    title: 'Angular developer',
+  }
+  question = {
+    id: '142'
+  }
+  now = new Date();
+
   result;
   audio;
 
   constructor(
     public voiceRecognitionService: VoiceRecognitionService,
+    public firebaseAudioFilesService: FirebaseAudioFilesService,
     public audioRecordService: AudioRecordService
   ) {
     this.voiceRecognitionService.init();
@@ -59,7 +73,13 @@ export class SpeechToTextComponent implements OnInit {
     this.audioRecordService.stop()
       .then((audio) => {
         this.audio = audio;
+
+
+        const audioName = `${this.candidate.fullName.toLocaleLowerCase().replace(/ /g, '_')}-${this.interview.title.toLocaleLowerCase().replace(/ /g, '_')}-q-${this.question.id}.mp3`;
+        this.firebaseAudioFilesService.upload(audioName, audio.audioBlob)
+
       })
+
 
   }
 
