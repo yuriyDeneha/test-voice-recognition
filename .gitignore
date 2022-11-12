@@ -11,8 +11,10 @@
 /node_modules
 .angular/*
 /.angular
+/.firebase
 /dist
 /cache/*
+*.cache
 
 # profiling files
 chrome-profiler-events*.json
