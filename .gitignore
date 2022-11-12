@@ -12,7 +12,6 @@
 .angular/*
 /.angular
 /.firebase
-/dist
 /cache/*
 *.cache
 
